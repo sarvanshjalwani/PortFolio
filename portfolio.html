@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            background: #1f242d;
+            color: #FFF;
+        }
+
+        a {
+            text-decoration: none;
+            color: #FFF;
+        }
+
+        .navbar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            padding: 25px 9%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            visibility: hidden;
+            opacity: 0;
+            animation: show-content 1.5s linear forwards;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes show-content {
+            100% {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+
+        .navbar .logo {
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .navbar ul {
+            display: flex;
+        }
+
+        .navbar ul li {
+            list-style: none;
+            margin-left: 35px;
+        }
+
+        .navbar ul li a {
+            font-size: 20px;
+            font-weight: 500;
+            transition: 0.5s;
+        }
+
+        .navbar ul li:hover a,
+        .navbar ul li.active a {
+            color: #7cf03d;
+        }
+
+        .bars-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            z-index: -1;
+        }
+
+        .bars-animation .bar {
+            width: 100%;
+            height: 100%;
+            background: #1f242d;
+            transform: translateY(-100%);
+            animation: show-bars 0.5s ease-in-out forwards;
+            animation-delay: calc(0.1s * var(--i));
+        }
+
+        @keyframes show-bars {
+            100% {
+                transform: translateY(0%);
+            }
+        }
+
+        .home {
+            display: flex;
+            align-items: center;
+            height: 100vh;
+            padding: 60px 9% 0;
+            color: #FFF;
+            visibility: hidden;
+            opacity: 0;
+            animation: show-content 1.5s linear forwards;
+            animation-delay: 1.6s;
+        }
+
+        .homeinfo h1 {
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+
+        .homeinfo h2 {
+            font-size: 45px;
+            margin-top: -10px;
+        }
+
+        .homeinfo h2 span {
+            position: relative;
+            display: inline-block;
+            color: transparent;
+            -webkit-text-stroke: 0.7px #7cf03d;
+            animation: display-text 16s linear infinite;
+            animation-delay: calc(-4s * var(--i));
+        }
+
+        @keyframes display-text {
+            25%,
+            100% {
+                display: none;
+            }
+        }
+
+        .homeinfo h2 span::before {
+            content: attr(data-text);
+            position: absolute;
+            width: 0;
+            border-right: 2px solid #7cf03d;
+            color: #7cf03d;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: fill-text 4s linear infinite;
+        }
+
+        @keyframes fill-text {
+            10%,
+            100% {
+                width: 0;
+            }
+            70%,
+            90% {
+                width: 100%;
+            }
+        }
+
+        .homeinfo p {
+            font-size: 16px;
+            margin: 10px 0 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 30px;
+            background-color: #7cf03d;
+            border: 2px solid #7cf03d;
+            border-radius: 40px;
+            box-shadow: 0 0 10px #7cf03d;
+            font-size: 16px;
+            color: #1f242d;
+            font-weight: 600;
+            transition: 0.5s;
+        }
+
+        .homeinfo .btnsci {
+            display: flex;
+            align-items: center;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: #7cf03d;
+            box-shadow: none;
+        }
+
+        .homeimg .imgbox {
+            position: relative;
+            width: 32vw;
+            height: 32vw;
+            border-radius: 50%;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .homeimg {
+            position: absolute;
+            right: 60px;
+            text-align: right;
+        }
+
+        .homeimg .imgbox::before,
+        .homeimg .imgbox::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: conic-gradient(transparent, transparent, transparent, #7cf03d);
+            transform: rotate(0deg);
+            animation: rotate-border 10s linear infinite;
+        }
+
+        .homeimg .imgbox::after {
+            animation-delay: -5s;
+        }
+
+        @keyframes rotate-border {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .homeimg .imgbox .imgitem {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: #1f242d;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .homeimg .imgbox .imgitem img {
+            position: absolute;
+            display: block;
+            width: 100%;
+            mix-blend-mode: lighten;
+        }
+
+        .homeinfo .btnsci .sci {
+            margin-left: 20px;
+        }
+
+        .homeinfo .btnsci .sci a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #7cf03d;
+            border-radius: 50%;
+            font-size: 20px;
+            color: #7cf03d;
+            margin: 0 8px;
+            transition: 0.5s;
+        }
+
+        .homeinfo .btnsci .sci a:hover {
+            background: #7cf03d;
+            color: #1f242d;
+            box-shadow: 0 0 10px #7cf03d;
+        }
+
+        .about-content,
+        .skills-content,
+        .projects-content,
+        .contact-content {
+            display: none;
+            padding: 80px 9% 60px;
+        }
+
+        .about-content h1,
+        .skills-content h1,
+        .projects-content h1,
+        .contact-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .skills-content h1 {
+            margin-bottom: 50px;
+        }
+
+        .skillbox {
+            display: flex;
+            flex-direction: row;
+            column-gap: 50px;
+            color: #FFF;
+            justify-content: center;
+        }
+
+        .technicalskills,
+        .communicationskills {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .skillsname {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 30px;
+            text-align: left;
+            list-style: none;
+        }
+
+        .skillsname li {
+            margin: 10px;
+            padding: 10px;
+        }
+
+        .progressbar {
+            background-color: aliceblue;
+            display: block;
+            height: 10px;
+            border-radius: 20px;
+            position: relative;
+            margin-top: 5px;
+        }
+
+        .progressbar span {
+            height: 10px;
+            float: left;
+            background-color: #7cf03d;
+            position: relative;
+            border-radius: 20px;
+        }
+
+        .html {
+            animation: htmlskill 2s forwards;
+        }
+
+        .css {
+            animation: cssskill 2s forwards;
+        }
+
+        .javascript {
+            animation: javascriptskill 2s forwards;
+        }
+
+        .communication {
+            animation: communicationskill 2s forwards;
+        }
+
+        .teamplayer {
+            animation: teamplayerskill 2s forwards;
+        }
+
+        .problem {
+            animation: problemskill 2s forwards;
+        }
+
+        @keyframes htmlskill {
+            from { width: 0px; }
+            to { width: 67%; }
+        }
+
+        @keyframes cssskill {
+            from { width: 0px; }
+            to { width: 40%; }
+        }
+
+        @keyframes javascriptskill {
+            from { width: 0px; }
+            to { width: 90%; }
+        }
+
+        @keyframes communicationskill {
+            from { width: 0px; }
+            to { width: 70%; }
+        }
+
+        @keyframes teamplayerskill {
+            from { width: 0px; }
+            to { width: 30%; }
+        }
+
+        @keyframes problemskill {
+            from { width: 0px; }
+            to { width: 55%; }
+        }
+
+        .projectbox {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .project1 {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+            border: 2px solid #7cf03d;
+            border-radius: 10px;
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+
+        .project1:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(124, 240, 61, 0.2);
+        }
+
+        .img1 {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .projectimage1 {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .project1 h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #7cf03d;
+            text-align: center;
+        }
+
+        .para1 {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 10px 15px;
+            border: 1px solid #7cf03d;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            padding: 12px 30px;
+            background-color: #7cf03d;
+            color: #1f242d;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            align-self: flex-start;
+        }
+
+        .submit-btn:hover {
+            background-color: transparent;
+            color: #7cf03d;
+            box-shadow: 0 0 10px #7cf03d;
+        }
+
+        footer {
+            background: #1f242d;
+            padding: 20px 9%;
+            text-align: center;
+            border-top: 1px solid rgba(124, 240, 61, 0.2);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .social-links a {
+            color: #FFF;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #7cf03d;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 5%;
+            }
+
+            .navbar ul li {
+                margin-left: 15px;
+            }
+
+            .navbar ul li a {
+                font-size: 16px;
+            }
+
+            .home {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 100px;
+                height: auto;
+            }
+
+            .homeinfo h1 {
+                font-size: 2.5rem;
+            }
+
+            .homeinfo h2 {
+                font-size: 1.8rem;
+            }
+
+            .homeimg {
+                position: relative;
+                right: auto;
+                margin-top: 40px;
+                margin-bottom: 40px;
+            }
+
+            .homeimg .imgbox {
+                width: 60vw;
+                height: 60vw;
+            }
+
+            .homeinfo .btnsci {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .homeinfo .btnsci .sci {
+                margin-left: 0;
+            }
+
+            .skillbox {
+                flex-direction: column;
+            }
+
+            .projectbox {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .project1 {
+                width: 100%;
+                max-width: 400px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bars-animation">
+        <div class="bar" style="--i:6;"></div>
+        <div class="bar" style="--i:5;"></div>
+        <div class="bar" style="--i:4;"></div>
+        <div class="bar" style="--i:3;"></div>
+        <div class="bar" style="--i:2;"></div>
+        <div class="bar" style="--i:1;"></div>
+    </div>
+
+    <nav class="navbar">
+        <a href="#" class="logo">Portfolio.</a>
+        <ul>
+            <li><a class="active" href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="home">
+        <div class="homeinfo">
+            <h1>Nitin Kumar</h1>
+            <h2>
+                I'm a
+                <span style="--i:4;" data-text="Frontend Developer">Frontend Developer</span>
+                <span style="--i:3;" data-text="Youtuber">Youtuber</span>
+                <span style="--i:2;" data-text="Blogger">Blogger</span>
+                <span style="--i:1;" data-text="Designer">Designer</span>
+            </h2>
+            <p>Welcome to my portfolio website. I'm a passionate frontend developer with expertise in HTML, CSS, and JavaScript. I create beautiful, responsive, and user-friendly web experiences.</p>
+
+            <div class="btnsci">
+                <a href="" class="btn">Download CV</a>
+                <div class="sci">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="homeimg">
+            <div class="imgbox">
+                <div class="imgitem">
+                    <img src="https://th.bing.com/th/id/OIP.s0dO9Ej-PyqDMxqdDe1m3AHaHa?rs=1&pid=ImgDetMain"
+                        alt="Profile Picture">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-content">
+        <h1>About Me</h1>
+        <p>I'm a frontend developer with a strong passion for creating intuitive and visually appealing user interfaces. With several years of experience in web development, I specialize in turning ideas into functional and beautiful websites.</p>
+        <p>My journey in web development began when I discovered my love for problem-solving and creativity. Since then, I've been constantly learning and adapting to new technologies to stay at the forefront of web development.</p>
+        <p>When I'm not coding, you can find me exploring new design trends, contributing to open-source projects, or sharing my knowledge through blogging and tutorials.</p>
+    </section>
+
+    <section id="skills" class="skills-content">
+        <h1>My Skills</h1>
+        <div class="skillbox">
+            <div class="technicalskills">
+                <h2>Technical skills</h2>
+                <ul class="skillsname">
+                    <li>
+                        <p>HTML</p>
+                        <div class="progressbar">
+                            <span class="html"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <p>CSS</p>
+                        <div class="progressbar">
+                            <span class="css"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <p>JAVASCRIPT</p>
+                        <div class="progressbar">
+                            <span class="javascript"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="communicationskills" style="text-align: center;">
+                <h2>Communication skills</h2>
+                <ul class="skillsname">
+                    <li>
+                        <p>COMMUNICATION</p>
+                        <div class="progressbar">
+                            <span class="communication"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <p>TEAMPLAYER</p>
+                        <div class="progressbar">
+                            <span class="teamplayer"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <p>PROBLEM SOLVING</p>
+                        <div class="progressbar">
+                            <span class="problem"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects-content">
+        <h1>My Projects</h1>
+        <div class="projectbox">
+            <div class="project1">
+                <div class="img1">
+                    <img class="projectimage1" src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="E-commerce Website">
+                </div>
+                <h3>E-commerce Website</h3>
+                <div class="para1">
+                    A fully responsive e-commerce website built with React and Node.js. Features include product filtering, cart functionality, and secure checkout process.
+                </div>
+                <a href="#" style="color: #7cf03d;">View Project →</a>
+            </div>
+            <div class="project1">
+                <div class="img1">
+                    <img class="projectimage1" src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Task Management App">
+                </div>
+                <h3>Task Management App</h3>
+                <div class="para1">
+                    A productivity application for managing tasks and projects. Built with Vue.js and Firebase, it offers real-time updates and collaborative features.
+                </div>
+                <a href="#" style="color: #7cf03d;">View Project →</a>
+            </div>
+            <div class="project1">
+                <div class="img1">
+                    <img class="projectimage1" src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Portfolio Template">
+                </div>
+                <h3>Portfolio Template</h3>
+                <div class="para1">
+                    A customizable portfolio template for creatives and developers. Features a clean design, responsive layout, and easy-to-update content sections.
+                </div>
+                <a href="#" style="color: #7cf03d;">View Project →</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-content">
+        <h1>Get In Touch</h1>
+        <form class="contact-form">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name
